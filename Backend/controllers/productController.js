@@ -26,6 +26,8 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 //Create/Add a Product
 exports.addProduct = catchAsyncErrors(async (req, res, next) => {
     const data = req.body;
+    
+    data.user = req.user.id;
 
     const product = await productModel.create(req.body);
 

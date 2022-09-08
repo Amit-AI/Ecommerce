@@ -9,6 +9,17 @@ const productSchema = new mongoose.Schema({
     category:{
         type: String,
         required: [true, "Please enter product category"]
+    },
+
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true
+    },
+
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

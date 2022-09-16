@@ -51,7 +51,7 @@ userSchema.pre("save", async function (next) {
 });
 
 //generates a JWT token
-userSchema.methods.getJWTToken = function () {
+userSchema.methods.generateJWTToken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE,
     });
@@ -66,7 +66,7 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 userSchema.methods.getResetPasswordToken = function () {
     const resetToken = crypto.randomBytes(20).toString("hex"); // generated random token
 
-    // hansing token using sha256 algo, and storing in DB
+    // hashing token using sha256 algo, and storing in DB
     this.resetPasswordToken = crypto
         .createHash("sha256")
         .update(resetToken)

@@ -4,6 +4,7 @@ const userModel = require("../models/userModel");
 const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/jwtTokenUtil");
 const sendEmail = require("../utils/sendEmailUtil");
+const crypto = require("crypto");
 
 /*-------------------------
     Register a user
@@ -25,7 +26,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Data Input", 400));
     }
 
-    const token = user.getJWTToken();
+    const token = user.generateJWTToken();
 
     sendToken(user, res, 201, "User registered successfully"); //creates JWT token and stores in cookie
 });
@@ -113,6 +114,44 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 
         return next(new ErrorHandler(err.message, 500));
     }
+});
+
+/*-------------------------
+    Reset Password
+---------------------------*/
+
+exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
+
+    //hashing token, because it's stored in the database in hashed form
+    const hashedToken = crypto
+        .createHash("sha256")
+        .update(req.params.token)
+        .digest("hex");
+
+    console.log(req.params.token)
+
+    const user = await userModel.findOne({
+        resetPasswordToken: hashedToken,
+        resetPasswordExpire: {$gt : Date.now()}
+    })
+
+    if(!user){
+        return next(new ErrorHandler("Reset password token is invalid or has been expired", 400));
+    }
+
+    if(req.body.password !== req.body.confirmPassword){
+        return next(new ErrorHandler("Password doesn't match", 400));
+    }
+
+    user.password = req.body.password;
+
+    //if password is reset, then there shoudn't be any password reset token present
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+
+    sendToken(user, res, 200, "Your password has been reset"); //sending new token for user login
 });
 
 /*-------------------------

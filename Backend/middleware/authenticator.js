@@ -14,7 +14,9 @@ exports.isUserAuthenticated = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Login required!", 401));
     }
 
-    const user = jwt.verify(token, process.env.JWT_SECRET); //decoding token, to check if current user is logged in
+    //decoding token, to check if current user is logged in
+    //jwt.verify throws error if token doesn't match
+    const user = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = await userModel.findById(user.id); //saving incoming user data to request object for future use
 

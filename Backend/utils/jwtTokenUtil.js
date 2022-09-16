@@ -1,6 +1,6 @@
 //creates JWT token and saves it in cookie
 const sendToken = (user, res, statusCode, message) => {
-    const token = user.getJWTToken();
+    const token = user.generateJWTToken();
 
     const options = {
         expires: new Date(

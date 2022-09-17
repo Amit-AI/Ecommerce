@@ -5,6 +5,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/jwtTokenUtil");
 const sendEmail = require("../utils/sendEmailUtil");
 const crypto = require("crypto");
+const { isErrored } = require("stream");
 
 /*-------------------------
     Register a user
@@ -31,9 +32,9 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     sendToken(user, res, 201, "User registered successfully"); //creates JWT token and stores in cookie
 });
 
-/*-------------------------
+/*---------------------------------------------
     Handles user login(email and password check)
----------------------------*/
+------------------------------------------------*/
 
 exports.loginUser = catchAsyncErrors(async (req, res, next) => {
     const { email, password } = req.body;
@@ -42,7 +43,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
         return next(new ErrorHandler("Please enter email or password", 400));
     }
 
-    const user = await userModel.findOne({ email }).select("+password");
+    const user = await userModel.findOne({ email }).select("+password"); //to select password also + is used, otherwise password won't be selected automatically to be compared
 
     if (!user) {
         return next(new ErrorHandler("Invalid email or password", 401));
@@ -121,25 +122,29 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 ---------------------------*/
 
 exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
-
     //hashing token, because it's stored in the database in hashed form
     const hashedToken = crypto
         .createHash("sha256")
         .update(req.params.token)
         .digest("hex");
 
-    console.log(req.params.token)
+    console.log(req.params.token);
 
     const user = await userModel.findOne({
         resetPasswordToken: hashedToken,
-        resetPasswordExpire: {$gt : Date.now()}
-    })
+        resetPasswordExpire: { $gt: Date.now() },
+    });
 
-    if(!user){
-        return next(new ErrorHandler("Reset password token is invalid or has been expired", 400));
+    if (!user) {
+        return next(
+            new ErrorHandler(
+                "Reset password token is invalid or has been expired",
+                400
+            )
+        );
     }
 
-    if(req.body.password !== req.body.confirmPassword){
+    if (req.body.password !== req.body.confirmPassword) {
         return next(new ErrorHandler("Password doesn't match", 400));
     }
 
@@ -155,7 +160,63 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 });
 
 /*-------------------------
-    Get all users
+    Get User Profile Details
+---------------------------*/
+
+exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
+    const user = req.user;
+
+    res.status(200).json({
+        success: true,
+        user,
+    });
+});
+
+/*-------------------------
+    Update user profile details
+---------------------------*/
+
+exports.updateProfileDetails = catchAsyncErrors(async (req, res, next) => {
+    const updateData = req.body;
+
+    const user = await userModel.findByIdAndUpdate(req.user._id, updateData);
+
+    if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+    }
+
+    sendToken(user, res, 200, "Profile details updated successfully");
+});
+
+/*-------------------------
+    Update user profile password
+---------------------------*/
+
+exports.updateProfilePassword = catchAsyncErrors(async (req, res, next) => {
+    console.log(req);
+    if (req.body.newPassword !== req.body.confirmPassword) {
+        return next(new ErrorHandler("Password doesn't match!"));
+    }
+
+    const user = await userModel
+        .findOne({ email: req.user.email })
+        .select("+password");
+
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+
+    if (!isPasswordMatched) {
+        return next(new ErrorHandler("Invalid old password", 401));
+    }
+
+    user.password = req.body.newPassword;
+
+    await user.save();
+
+    sendToken(user, res, 200, "Password updated successfully");
+});
+
+/*-------------------------
+    Get all users (ADMIN)
 ---------------------------*/
 
 exports.getUsers = catchAsyncErrors(async (req, res) => {
@@ -165,7 +226,7 @@ exports.getUsers = catchAsyncErrors(async (req, res) => {
 });
 
 /*-------------------------
-    Update user details
+    Update user details (ADMIN)
 ---------------------------*/
 
 exports.updateUserDetails = catchAsyncErrors(async (req, res, next) => {
@@ -185,7 +246,7 @@ exports.updateUserDetails = catchAsyncErrors(async (req, res, next) => {
 });
 
 /*-------------------------
- Delete a user
+ Delete a user (ADMIN)
 ---------------------------*/
 
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {

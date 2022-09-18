@@ -188,12 +188,11 @@ exports.updateProfileDetails = catchAsyncErrors(async (req, res, next) => {
     sendToken(user, res, 200, "Profile details updated successfully");
 });
 
-/*-------------------------
+/*------------------------------
     Update user profile password
----------------------------*/
+--------------------------------*/
 
 exports.updateProfilePassword = catchAsyncErrors(async (req, res, next) => {
-    console.log(req);
     if (req.body.newPassword !== req.body.confirmPassword) {
         return next(new ErrorHandler("Password doesn't match!"));
     }
@@ -226,6 +225,23 @@ exports.getUsers = catchAsyncErrors(async (req, res) => {
 });
 
 /*-------------------------
+    Get user details (ADMIN)
+---------------------------*/
+
+exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
+    const user = await userModel.findById(req.params.id);
+
+    if (!user) {
+        return next(new ErrorHandler("User not found!", 400));
+    }
+
+    res.status(200).json({
+        success: true,
+        user,
+    });
+});
+
+/*-------------------------
     Update user details (ADMIN)
 ---------------------------*/
 
@@ -235,7 +251,7 @@ exports.updateUserDetails = catchAsyncErrors(async (req, res, next) => {
     const user = await userModel.findByIdAndUpdate(req.params.id, updateData);
 
     if (!user) {
-        return next(new ErrorHandler("User not found", 404));
+        return next(new ErrorHandler("User not found", 400));
     }
 
     res.status(200).json({
@@ -253,10 +269,10 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     user = await userModel.findById(req.params.id);
 
     if (!user) {
-        return next(new ErrorHandler("User not found", 404));
+        return next(new ErrorHandler("User not found", 400));
     }
 
-    user.remove();
+    await user.remove();
     res.status(200).json({
         success: true,
         message: "User deleted successfully",

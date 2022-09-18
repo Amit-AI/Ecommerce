@@ -26,7 +26,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 //Create/Add a Product
 exports.addProduct = catchAsyncErrors(async (req, res, next) => {
     const data = req.body;
-    
+
     data.user = req.user.id;
 
     const product = await productModel.create(req.body);
@@ -77,7 +77,7 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
-//get all the product details
+//get a product details
 exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
     const product = await productModel.findById(req.params.id);
 
@@ -86,4 +86,53 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
     }
 
     res.status(200).json(product);
+});
+
+// create/update product review
+exports.createReview = catchAsyncErrors(async (req, res, next) => {
+    const { productId, rating, comment } = req.body;
+
+    //new review
+    const review = {
+        user: req.user._id, //"_id" gives object id, and only "id" gives string id
+        name: req.user.name,
+        rating: Number(rating),
+        comment,
+    };
+
+    const product = await productModel.findById(productId);
+
+    let reviewFound = false;
+
+    //if review already present, update it
+    product.reviews.forEach((rev) => {
+        if (rev.user.toString() === req.user.id) { //used "id", instead of "_id"
+            rev.rating = rating;
+            rev.comment = comment;
+            reviewFound = true;
+        }
+    });
+
+    //if no previous reviews, add new one
+    if (!reviewFound) {
+        product.reviews.push(review);
+        product.numOfReviews = product.reviews.length;
+    }
+
+    //find average of all ratings and update overall rating of a product
+
+    let avgRating = 0;
+
+    product.reviews.forEach((rev) => {
+        avgRating += rev.rating;
+    });
+
+    product.ratings = avgRating / product.reviews.length;
+
+    await product.save({ validateBeforeSave: false });
+
+    res.status(200).json({
+        success: true,
+        message: `Review ${reviewFound?"updated":"added"} successfully`,
+    });
 });

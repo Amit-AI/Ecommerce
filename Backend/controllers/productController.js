@@ -106,7 +106,8 @@ exports.createReview = catchAsyncErrors(async (req, res, next) => {
 
     //if review already present, update it
     product.reviews.forEach((rev) => {
-        if (rev.user.toString() === req.user.id) { //used "id", instead of "_id"
+        if (rev.user.toString() === req.user.id) {
+            //used "id", instead of "_id"
             rev.rating = rating;
             rev.comment = comment;
             reviewFound = true;
@@ -133,6 +134,54 @@ exports.createReview = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        message: `Review ${reviewFound?"updated":"added"} successfully`,
+        message: `Review ${reviewFound ? "updated" : "added"} successfully`,
+    });
+});
+
+// Get ALL the reviews of a product
+
+exports.getAllReviews = catchAsyncErrors(async (req, res, next) => {
+    const product = await productModel.findById(req.params.id);
+
+    if (!product) {
+        return next(new ErrorHandler("Product not found", 404));
+    }
+
+    const reviews = product.reviews;
+
+    res.status(200).json({
+        success: true,
+        reviews: reviews,
+    });
+});
+
+//delete review
+exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
+    const product = await productModel.findById(req.query.productId);
+
+    if (!product) {
+        return next(new ErrorHandler("Product not found", 404));
+    }
+
+    let ratingAvg = 0;
+    const goodReviews = product.reviews.filter((rev) => {
+        if (rev._id.toString() != req.query.reviewId.toString()) {
+            ratingAvg += rev.rating;
+            return rev;
+        }
+    });
+
+    if (product.reviews.length == goodReviews.length) {
+        return next(new ErrorHandler("Review not found", 404));
+    }
+
+    product.ratings = ratingAvg / goodReviews.length;
+    product.reviews = goodReviews;
+
+    await product.save();
+
+    res.status(200).json({
+        success: true,
+        message: "Review Delete succesfully",
     });
 });

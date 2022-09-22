@@ -1,0 +1,54 @@
+.header {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.nav__wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo img{
+    width: 60px;
+}
+
+.menu a{
+    text-decoration: none;
+    margin: 1rem;
+    color: rgb(73, 68, 68);
+    font-weight: 600;
+}
+
+.nav__right span{
+    margin: 0.5rem;
+    font-weight: 600;
+}
+
+.user a {
+    text-decoration: none;
+    color: rgb(73, 68, 68);
+    font-weight: 600;
+}
+
+.cart__icon {
+    position: relative;
+}
+
+
+
+.cart__batch {
+    position: absolute;
+    top: -15px;
+    right: -18px;
+    background: #df2020;
+    color: white;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} 

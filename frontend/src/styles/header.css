@@ -10,7 +10,7 @@
 }
 
 .logo img{
-    width: 60px;
+    max-width: 60px;
 }
 
 .menu a{

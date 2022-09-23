@@ -1,29 +1,33 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import "../../styles/products.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const ProductGrid = () => {
-    let products = [];
+    const [products, setProducts] = useState([]);
+    // Platzi Fake Store API
+    const fetchData = () => {
+        fetch("https://api.escuelajs.co/api/v1/products?offset=0&limit=10")
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            setProducts(data);
+        })
+    }
     
     useEffect(()=>{
-        fetch("https://fakestoreapi.com/products")
-            .then((res) => res.json())
-            .then((json) => {
-                json.forEach((item) => {
-                    products.push(item);
-                });
-            });
+        fetchData();
     },[])
 
 
-    console.log(products);
+    // console.log(products);
     return (
         <div className="products__container">
-            {products.length? 
-            products.map((item) => {
-                return (<ProductCard product={item} key={item.id} />)
-            }) : "Nothing to Display"};
+            {products.length>0 &&  products.map((item)=>{
+                // console.log(item.title)
+                return (<ProductCard key = {item.id} product={item}/>)
+            })}
 
             <ProductCard />
             <ProductCard />

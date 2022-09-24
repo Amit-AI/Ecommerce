@@ -1,0 +1,31 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.cart__product{
+    display: flex;
+    justify-content: space-around;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 0.5rem;
+    align-items: center;
+    margin: 1rem 1rem;
+}
+
+.cart__product p{
+    margin: 0 1rem;
+    flex: 1;
+}
+
+
+
+
+
+.cart__deleteBtn button {
+    outline: none;
+    border: none;
+    padding: 0.5rem;
+    background-color: tomato;
+    border-radius: 10px;
+    color: white;
+}

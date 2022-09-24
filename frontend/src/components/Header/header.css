@@ -1,6 +1,6 @@
 .header {
     width: 90%;
-    margin: 0 auto;
+    margin: 1rem auto;
 }
 
 .nav__wrapper{
@@ -10,8 +10,9 @@
 }
 
 .logo img{
-    max-width: 60px;
+    max-width: 40px;
 }
+
 
 .menu a{
     text-decoration: none;
@@ -35,8 +36,6 @@
     position: relative;
 }
 
-
-
 .cart__batch {
     position: absolute;
     top: -15px;
@@ -52,3 +51,8 @@
     align-items: center;
     justify-content: center;
 } 
+
+.cart__icon a {
+    text-decoration: none;
+    color: rgb(73, 68, 68);
+}

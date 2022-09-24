@@ -1,19 +1,15 @@
 import React from "react";
 import ProductCard from "./ProductCard";
-import "../../styles/products.css";
+import "./products.css";
 import { useState, useEffect } from "react";
 
 const ProductGrid = () => {
     const [products, setProducts] = useState([]);
-    // Platzi Fake Store API
-    const fetchData = () => {
-        fetch("https://api.escuelajs.co/api/v1/products?offset=0&limit=10")
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            setProducts(data);
-        })
+    
+    const fetchData = async () => {
+        const res = await fetch("https://fakestoreapi.com/products")
+        const data = await res.json();
+        setProducts(data);
     }
     
     useEffect(()=>{
@@ -28,9 +24,6 @@ const ProductGrid = () => {
                 // console.log(item.title)
                 return (<ProductCard key = {item.id} product={item}/>)
             })}
-
-            <ProductCard />
-            <ProductCard />
         </div>
     );
 };

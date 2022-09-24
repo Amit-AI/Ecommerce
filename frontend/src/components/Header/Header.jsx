@@ -1,7 +1,8 @@
 import React from "react";
 import logo from "../../assets/images/logo1.png";
 import { NavLink, Link } from "react-router-dom";
-import "../../styles/header.css";
+import "./header.css";
+import { useSelector } from "react-redux";
 
 const nav_links = [
     {
@@ -15,13 +16,13 @@ const nav_links = [
 ];
 
 const Header = () => {
+    const cartItems = useSelector((state) => state.cart);
     return (
         <header className="header">
             <div className="nav__wrapper">
                 <div className="logo">
-                    <img  src={logo} alt="logo" />
+                    <img src={logo} alt="logo" />
                 </div>
-
 
                 {/* =========menu========== */}
 
@@ -45,8 +46,12 @@ const Header = () => {
 
                 <div className="nav__right">
                     <span className="cart__icon">
-                        <i className="ri-shopping-basket-line"></i>
-                        <span className="cart__batch">2</span>
+                        <Link to="/cart">
+                            <i className="ri-shopping-basket-line"></i>
+                            <span className="cart__batch">
+                                {cartItems.length}
+                            </span>
+                        </Link>
                     </span>
                     <span className="user">
                         <Link to="/login">

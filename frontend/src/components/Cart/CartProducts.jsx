@@ -22,7 +22,7 @@ function CartProducts() {
                         <div key={index} className="cart__product">
                             <img
                                 className="productImg"
-                                src={product.image}
+                                src={product.images[0]}
                                 alt="productImage"
                             />
                             <p className="cart__title" >{product.title}</p>

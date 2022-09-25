@@ -24,6 +24,7 @@ const ProductGrid = () => {
         // fetchData();
     }, []);
 
+    // Loading animation
     if (status === STATUS.LOADING) {
         return (
             <div className="loading__wrapper">

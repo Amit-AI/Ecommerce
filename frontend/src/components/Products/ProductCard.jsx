@@ -1,8 +1,8 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./products.css";
-import {useDispatch } from "react-redux";
-import { addToCart} from "../../store/cartSlice";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/cartSlice";
 
 const ProductCard = (props) => {
     let { product } = props;
@@ -16,14 +16,18 @@ const ProductCard = (props) => {
     return (
         product && (
             <div className="card__container">
-                <NavLink to="/productdetails">
+                <Link to={`/product/${product.id}`}>
                     <div className="card__image">
                         <img src={`${product.image}`} alt="" />
                     </div>
-                </NavLink>
+                </Link>
                 <div className="card__desc">
-                    <p>{product.title}</p>
-                    <p>{product.price}$</p>
+                    <Link to={`/product/${product.id}`}>
+                        <p className="title">{product.title}</p>
+                    </Link>
+                    <p className="price">
+                        &#8377;{Math.round(product.price * 81.26)}
+                    </p>
                     {/* <p>{product.description}</p> */}
                     <button
                         onClick={() => handleAdd(product)}

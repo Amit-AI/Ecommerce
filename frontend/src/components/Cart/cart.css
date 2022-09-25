@@ -3,7 +3,56 @@
     margin: 0;
     padding: 0;
 }
+
+.cart__heading{
+    text-align: center;
+    margin: 2rem;
+}
+
 .cart__product{
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    column-gap: 1rem;
+    row-gap: 1.5rem;
+    align-items: center;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    padding: 0.5rem;
+    width: 80%;
+    margin: 1rem auto;
+    border-radius: 10px;
+}
+
+.productImg {
+    height: 70px;
+    margin: 0 auto;
+    display: block;
+}
+
+.cart__title{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1;
+    margin: 0 1rem;
+}
+
+.cart__deleteBtn{
+    outline: none;
+    border: none;
+    padding: 0.5rem;
+    color: tomato;
+    font-size: 2rem;
+    background-color: transparent;
+    opacity: 0.8;
+
+}
+
+.cart__deleteBtn:hover{
+    color: red;
+    opacity: 1;
+    cursor: pointer;
+}
+/* .cart__product{
     display: flex;
     justify-content: space-around;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -12,20 +61,49 @@
     margin: 1rem 1rem;
 }
 
-.cart__product p{
+.cart__title{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1;
     margin: 0 1rem;
+    border: 1px solid;
+}
+
+.cart__price{
     flex: 1;
 }
 
 
 
-
-
-.cart__deleteBtn button {
+.cart__deleteBtn{
     outline: none;
     border: none;
     padding: 0.5rem;
-    background-color: tomato;
-    border-radius: 10px;
-    color: white;
+    color: tomato;
+    font-size: 2rem;
+    background-color: transparent;
+    opacity: 0.8;
+
+}
+
+.cart__deleteBtn:hover{
+    color: red;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.productImg {
+    height: 70px;
+}
+*/
+
+.cart__emptyWrapper{
+    margin: 2rem 0;
+}
+
+.cartImg{
+    width: 30vmax;
+    display: block;
+    margin: 0 auto;
 }

@@ -13,11 +13,18 @@
     max-width: 40px;
 }
 
+.nav__wrapper a{
+    transition: 0.16s ease-in-out;
+}
+.nav__wrapper a:hover {
+    border-bottom: 2px solid rgba(255, 99, 71, 0.83);
+    color:rgba(255, 99, 71, 0.83)
+}
 
 .menu a{
     text-decoration: none;
     margin: 1rem;
-    color: rgb(73, 68, 68);
+    color: rgb(93, 86, 86);
     font-weight: 600;
 }
 

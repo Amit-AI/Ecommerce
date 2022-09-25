@@ -1,7 +1,7 @@
 
 .products__heading{
     text-align: center;
-    
+    margin: 2rem;
 }
 
 .productSearch{
@@ -21,44 +21,95 @@
 
 
 .card__container{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     border-radius: 10px;
     overflow: hidden;
     transition: 0.3s ease-in-out;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
-
-
-.card__container:hover {
-    transform: scale(1.05);
+.card__container a:hover{
+    color: tomato;
 }
-
 
 .card__image{
-    width: 100%;
+    margin: 1rem 1rem;
+    overflow: hidden;
 }
 
+
 .card__image img{
+    transition: 0.3s ease-in-out;
     width: 100%;
     height: 150px;
     object-fit: contain;
 }
 
-.card__desc {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+
+.card__image img:hover{
+    transform: scale(1.1);
 }
 
+.title{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 
 .card__btn{
     outline: none;
     border: none;
-    padding: 1rem;
+    padding: 0.5rem;
     background-color: tomato;
     border-radius: 10px;
-    margin: 0 auto;
+    align-self: flex-end;
+    color:white;
+    cursor: pointer;
 }
+
+
+/* ============  Loading Animation ================*/
+
+.loading__wrapper{
+    /* border: 1px solid; */
+    height: 30vmax;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lds-dual-ring {
+    display: block;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid black;
+    border-color: black transparent black transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
 
 
 

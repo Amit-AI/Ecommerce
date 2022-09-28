@@ -28,7 +28,7 @@ const ProductGrid = () => {
     if (status === STATUS.LOADING) {
         return (
             <div className="loading__wrapper">
-                <div class="lds-dual-ring"></div>
+                <div className="lds-dual-ring"></div>
             </div>
         );
     }

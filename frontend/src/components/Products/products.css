@@ -1,16 +1,24 @@
-
-.products__heading{
+.products__heading {
     text-align: center;
     margin: 2rem;
 }
 
-.productSearch{
+.productSearch {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.products__container{
+.productSearch input {
+    padding: 0.7rem;
+    width: 500px;
+    border-radius: 50px;
+    border: 1px solid gray;
+    font-size: 1rem;
+    outline: none;
+}
+
+.products__container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 1.5rem;
@@ -18,9 +26,7 @@
     margin: 2rem auto;
 }
 
-
-
-.card__container{
+.card__container {
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -32,58 +38,56 @@
     /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
     /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
     /* box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px; */
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+        rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
-.card__container a:hover{
+.card__container a:hover {
     color: tomato;
 }
 
-.card__image{
+.card__image {
     overflow: hidden;
 }
 
-
-.card__image img{
+.card__image img {
     transition: 0.3s ease-in-out;
     width: 100%;
     height: 150px;
     object-fit: contain;
 }
 
-
-.card__image img:hover{
+.card__image img:hover {
     transform: scale(1.1);
 }
 
-.title{
+.title {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.card__btn{
+.card__btn {
     outline: none;
     border: none;
     padding: 0.5rem;
     background-color: rgb(27, 230, 196);
     border-radius: 10px;
     align-self: flex-end;
-    color:white;
+    color: white;
     cursor: pointer;
     display: block;
     margin: 1rem auto;
     transition: 0.2s ease-in-out;
 }
 
-.card__btn:hover{
+.card__btn:hover {
     transform: scale(1.05);
 }
 
-
 /* ============  Loading Animation ================*/
 
-.loading__wrapper{
+.loading__wrapper {
     /* border: 1px solid; */
     height: 30vmax;
     display: flex;
@@ -96,8 +100,8 @@
     width: 80px;
     height: 80px;
     margin: 0 auto;
-  }
-  .lds-dual-ring:after {
+}
+.lds-dual-ring:after {
     content: " ";
     display: block;
     width: 64px;
@@ -107,16 +111,12 @@
     border: 6px solid black;
     border-color: black transparent black transparent;
     animation: lds-dual-ring 1.2s linear infinite;
-  }
-  @keyframes lds-dual-ring {
+}
+@keyframes lds-dual-ring {
     0% {
-      transform: rotate(0deg);
+        transform: rotate(0deg);
     }
     100% {
-      transform: rotate(360deg);
+        transform: rotate(360deg);
     }
-  }
-
-
-
-
+}

@@ -7,8 +7,7 @@ const Products = () => {
         <div>
             <h1 className="products__heading">All Products</h1>
             <div className="productSearch">
-                <input type="text" placeholder="search" spellCheck="false"/>
-                <button><i className="ri-search-line"></i></button>
+                <input type="text" placeholder="search a product..." spellCheck="false"/>
             </div>
             <ProductGrid />
         </div>

@@ -29,7 +29,7 @@ exports.addProduct = catchAsyncErrors(async (req, res, next) => {
 
     data.user = req.user.id;
 
-    const product = await productModel.create(req.body);
+    const product = await productModel.create(data);
 
     if (!product) {
         return next(new ErrorHandler("Product Creation Failed", 400));

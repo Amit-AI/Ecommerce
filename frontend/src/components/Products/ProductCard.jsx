@@ -12,20 +12,22 @@ const ProductCard = (props) => {
     const handleAdd = (product) => {
         dispatch(addToCart(product));
     };
+    // {`${product.images[0]}`} 
 
+    // console.log(product.images[0]? product.images[0].url: "NOT AVAILABLE")
     return (
         <div className="card__container">
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/product/${product._id}`}>
                 <div className="card__image">
-                    <img src={`${product.images[0]}`} alt="" />
+                    <img src={`${product.images[0]? product.images[0].url: "NOT AVAILABLE"}`} alt="" /> 
                 </div>
             </Link>
             <div className="card__desc">
-                <Link to={`/product/${product.id}`}>
-                    <p className="title">{product.title}</p>
+                <Link to={`/product/${product._id}`}>
+                    <p className="title">{product.name}</p>
                 </Link>
                 <p className="price">
-                    &#8377;{Math.round(product.price * 81.26)}
+                    &#8377;{Math.round(product.price)}
                 </p>
                 {/* <p>{product.description}</p> */}
                 <button
@@ -36,9 +38,7 @@ const ProductCard = (props) => {
                 </button>
             </div>
         </div>
-        // product && (  added for issue where product array was null, API issue
-
-        // )
+        
     );
 };
 

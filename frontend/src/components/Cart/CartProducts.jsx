@@ -22,11 +22,11 @@ function CartProducts() {
                         <div key={index} className="cart__product">
                             <img
                                 className="productImg"
-                                src={product.images[0]}
+                                src="https://img6.gadgetsnow.com/gd/images/products/additional/large/G390852_View_1/mobiles/smartphones/apple-iphone-14-pro-max-128-gb-deep-purple-6-gb-ram-.jpg"
                                 alt="productImage"
                             />
-                            <p className="cart__title" >{product.title}</p>
-                            <p className="cart__price" >&#8377;{Math.round(product.price * 81.26)}</p>
+                            <p className="cart__title" >{product.name}</p>
+                            <p className="cart__price" >&#8377;{Math.round(product.price)}</p>
                             <button
                                 onClick={() => handleDelete(product.id)}
                                 className="cart__deleteBtn"

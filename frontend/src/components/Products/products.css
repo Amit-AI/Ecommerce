@@ -120,3 +120,33 @@
         transform: rotate(360deg);
     }
 }
+
+
+/* =========Category================== */
+
+.categories{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem auto;
+    gap: 1rem;
+
+}
+
+.category__item{
+    display: none;
+}
+
+.category__label{
+    background-color: tomato;
+    color: white;
+    width: 100px;
+    text-align: center;
+    padding: 0.2rem 0.5rem;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.category__label:hover{
+    background-color: red;
+}

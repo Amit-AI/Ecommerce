@@ -26,14 +26,29 @@ export const { setProducts, setStatus } = productSlice.actions;
 export default productSlice.reducer;
 // Redux THUNKS -- used for creating async reducers
 
-export function fetchProducts() {
+export function fetchProducts(filters) {
     return async function fetchProductThunk(dispatch, getState) {
         dispatch(setStatus(STATUS.LOADING));
         try {
-            const res = await fetch("https://api.escuelajs.co/api/v1/products");
+            // const res = await fetch("https://api.escuelajs.co/api/v1/products");
+            const { name, category } = filters;
+            let url = "http://localhost:5000/api/products";
+            if (name || category) {
+                url += "?";
+
+                if (name) {
+                    url += `name=${name}&`;
+                }
+
+                if (category) {
+                    url += `category=${category}`;
+                }
+            }
+            const res = await fetch(url);
             const data = await res.json();
-            dispatch(setProducts(data));
-            dispatch(setStatus(STATUS.SUCCESS))
+            // console.log(data.products);
+            dispatch(setProducts(data.products));
+            dispatch(setStatus(STATUS.SUCCESS));
         } catch (err) {
             console.log(err);
             dispatch(setStatus(STATUS.ERROR));

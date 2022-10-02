@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { STATUS, fetchProducts } from "../../store/productsSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-const ProductGrid = () => {
+const ProductGrid = ({ filters }) => {
     const dispatch = useDispatch();
 
     const { data: products, status } = useSelector((state) => state.products); //renamed data property to prop
@@ -20,9 +20,9 @@ const ProductGrid = () => {
     // }
 
     useEffect(() => {
-        dispatch(fetchProducts());
+        dispatch(fetchProducts(filters));
         // fetchData();
-    }, []);
+    }, [filters]);
 
     // Loading animation
     if (status === STATUS.LOADING) {
@@ -39,7 +39,7 @@ const ProductGrid = () => {
             {products.length > 0 &&
                 products.map((item) => {
                     // console.log(item.title)
-                    return <ProductCard key={item.id} product={item} />;
+                    return <ProductCard key={item._id} product={item} />;
                 })}
         </div>
     );
